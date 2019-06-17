@@ -1,0 +1,27 @@
+create database Road_Info
+on 
+primary (
+name = 'Road_Info',
+filename = 'd:\Road_Info.mdf')
+log on (
+name = 'score_log',
+filename = 'd:\Road_Info.ldf');
+
+use Road_Info;
+
+create table Road_Info_main
+(sid int not null,
+region varchar(10) not null,
+srcdetail varchar(20) null,
+areaNm varchar(20) null,
+UID varchar(20) null,
+direction varchar(10) null,
+y1 varchar(20) null,
+happentime varchar(20) null,
+roadtype varchar(10) null,
+road varchar(20) null,
+modDttm varchar(20) null,
+comment varchar(10) null,
+happendate varchar(200) null,
+x1 varchar(10) null,
+primary key (sid));
