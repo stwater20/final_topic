@@ -11,17 +11,21 @@ use Road_Info;
 
 create table Road_Info_main
 (sid int not null,
-region varchar(10) not null,
-srcdetail varchar(20) null,
-areaNm varchar(20) null,
-UID varchar(20) null,
-direction varchar(10) null,
-y1 varchar(20) null,
-happentime varchar(20) null,
-roadtype varchar(10) null,
-road varchar(20) null,
-modDttm varchar(20) null,
-comment varchar(10) null,
+region varchar(20) not null,
+srcdetail varchar(200) null,
+areaNm varchar(200) null,
+UID varchar(200) null,
+direction varchar(100) null,
+y1 varchar(200) null,
+happentime varchar(200) null,
+roadtype varchar(100) null,
+road varchar(200) null,
+modDttm varchar(200) null,
+commemt varchar(5000) null,
 happendate varchar(200) null,
-x1 varchar(10) null,
+x1 varchar(100) null,
 primary key (sid));
+
+select * from Road_Info_main
+use Road_Info
+Drop table Road_Info_main
