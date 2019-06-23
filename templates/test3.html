@@ -1,0 +1,172 @@
+{% extends "bootstrap/base.html"%}
+{% block doc -%}
+<!DOCTYPE html>
+<html{% block html_attribs %}{% endblock html_attribs %}>
+    {%- block html %}
+
+    <head>
+
+        {%- block head %}
+        <title>{% block title %}D1069116{% endblock title %}</title>
+        {%- block metas %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {%- endblock metas %}
+        {%- block styles %}
+        <!-- Bootstrap -->
+        <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet">
+        <style>
+            body {
+                min-height: 2000px;
+                padding-top: 70px;
+            }
+        </style>
+        {%- endblock styles %}
+
+        {%- endblock head %}
+    </head>
+    <body{% block body_attribs %}{% endblock body_attribs %}>
+        {% block body -%}
+        {% block navbar %}
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">D10619116</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="/">首頁
+                            </a></li>
+                        <li><a href="/">查詢1</a></li>
+                        <li><a href="/t2">查詢2</a></li>
+                        <li><a href="#contact">查詢3</a></li>
+
+                    </ul>
+
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </nav>
+        {%- endblock navbar %}
+        {% block content -%}
+        <div class="container">
+            <div class="container">
+              
+                     <h1>複雜搜尋</h1>
+
+                     <p>依據<select id="s1_1" style="width:20%; display: inline-block;" class="form-control"
+                             onchange="te()">
+                             <option value="srcdetail">資料來源</option>
+                             <option value="direction">方向</option>
+                             <option value="roadtype">路況類別</option>
+                         </select> 時間：
+                         <select id="s1_1_1" style="width:14%; display: inline-block;" class="form-control">
+                             <option value="2018">2018</option>
+                             <option value="2019" >2019</option>
+                         </select>
+                         年
+                         <select id="s1_1_2" style="width:10%; display: inline-block;" class="form-control">
+                             <option value="01">1</option>
+                             <option value="02">2</option>
+                             <option value="03">3</option>
+                             <option value="04">4</option>
+                             <option value="05">5</option>
+                             <option value="06">6</option>
+                             <option value="07">7</option>
+                             <option value="08">8</option>
+                             <option value="09">9</option>
+                             <option value="10">10</option>
+                             <option value="11">11</option>
+                             <option value="12">12</option>
+                         </select>
+                         月 到
+                          <select id="s1_2_1" style="width:14%; display: inline-block;" class="form-control">
+                              <option value="2018">2018</option>
+                              <option value="2019" selected>2019</option>
+                          </select>
+                          年
+                          <select id="s1_2_2" style="width:10%; display: inline-block;" class="form-control">
+                              <option value="1">1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                              <option value="4">4</option>
+                              <option value="5">5</option>
+                              <option value="6">6</option>
+                              <option value="7">7</option>
+                              <option value="8">8</option>
+                              <option value="9">9</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12" selected>12</option>
+                          </select>
+                         
+                             <span id=result></span>
+
+                 <canvas id="panel" height="330px" width="700px"> </canvas>
+               
+            </div>
+        </div>
+
+
+        {%- endblock content %}
+        {% block scripts %}
+        <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+        <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+       
+        <script type=text/javascript> $(function() { 
+            
+            var can = $('#panel').get(0).getContext('2d'); /*繪製類型*/
+            var canData;
+            //定義圖標的數據
+            function refresh(data) { //設置定時器
+            
+            canData = {
+            labels: data.data2,
+            /*初始x軸數據*/
+            datasets: [{
+            label: data.data3,
+            //折線的填充顏色
+            fillColor: "rgba(255,255,255,0.1)",
+            //線條顏色：
+            strokeColor: "rgba(255,255,0,1)",
+            //y軸初始數據：
+            data: data.data1
+            }]
+            };
+            console.log(canData)
+            line = new Chart(can, {
+            type: "line",
+            data: canData
+            })
+            // removeData(line);
+            // addData(line, data.time, data.data)
+            }
+
+
+            
+            
+            
+            $SCRIPT_ROOT={{ request.script_root|tojson|safe }};
+             $('select').bind('change', function() { $.getJSON($SCRIPT_ROOT + '/at2' , { a:
+             $('#s1_1').val(), b: $('#s1_1_1').val() ,c: $('#s1_1_2').val(), d: $('#s1_2_1').val() ,e:
+             $('#s1_2_2').val()
+             }, function(data) {
+             console.log(data);
+             refresh(data); }); return false; }); });
+            $('a#calculate').bind('click', function() { $.getJSON($SCRIPT_ROOT + '/at2' , { a:
+            $('#s1_1').val(), b: $('#s1_1_1').val() ,c: $('#s1_1_2').val(), d: $('#s1_2_1').val() ,e: $('#s1_2_2').val()
+            }, function(data) {
+                console.log(data);
+            refresh(data); }); return false; });  </script>
+        {%- endblock scripts %}
+        {%- endblock body %} </body> {%- endblock html %}
+
+        </html> {% endblock doc -%}
